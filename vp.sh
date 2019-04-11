@@ -68,11 +68,13 @@ create () {
         args=("${VP_ENV_DIR}")
     fi
 
-    if virtualenv "${args[@]}" && [ -r .gitignore ]; then
+    if virtualenv "${args[@]}"; then
+        return $?
+    fi
+
+    if [ -r .gitignore ]; then
         echo "${VP_ENV_DIR}/" >> .gitignore
         echo "Added '${VP_ENV_DIR}' name to .gitignore."
-    else
-        return $?
     fi
 
     return 0
